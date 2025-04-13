@@ -1,14 +1,13 @@
 package com.github.testing.expensesplitter;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 
 public class MainController {
-    @FXML
-    private Label welcomeText;
 
+    // Ensure this method is defined in the MainController class
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    private void handleClickMeAction(ActionEvent event) {
+        System.out.println("Button clicked!");
     }
 }
