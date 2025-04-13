@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.github.testing.expensesplitter.MainController">
-    <Button text="Click Me!" layoutX="100" layoutY="100" fx:id="btnClickMe" onAction="#handleClickMeAction"/>
-</AnchorPane>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.testing.expensesplitter.MainController" spacing="10" alignment="CENTER">
+    <Label text="Expense Splitter" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+    <TextField fx:id="person1Name" promptText="Enter name of person 1" />
+    <TextField fx:id="person2Name" promptText="Enter name of person 2" />
+    <TextField fx:id="expenseAmount" promptText="Enter total expense amount" />
+    <Button fx:id="splitButton" text="Split Expense" onAction="#handleSplitExpenseAction" />
+</VBox>
