@@ -4,38 +4,53 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainController {
+
+    @FXML
+    private VBox vbox;
 
     @FXML
     private TextField person1Name, person2Name, expenseAmount;
 
     @FXML
-    private Button splitButton;
+    private Button splitButton, addPersonButton;
 
-    // A map to hold the names and the amounts each person has to pay
-    private Map<String, Double> expenseDistribution = new HashMap<>();
+    private final List<TextField> additionalPeople = new ArrayList<>();
 
+    @FXML
+    public void handleAddPersonAction() {
+        TextField newPersonField = new TextField();
+        newPersonField.setPromptText("Enter name of another person");
+        additionalPeople.add(newPersonField);
+        vbox.getChildren().add(vbox.getChildren().size() - 2, newPersonField); // Add before the last two buttons
+    }
+
+    @FXML
     public void handleSplitExpenseAction() {
-        String name1 = person1Name.getText();
-        String name2 = person2Name.getText();
+        List<String> names = new ArrayList<>();
+        names.add(person1Name.getText());
+        names.add(person2Name.getText());
+        for (TextField personField : additionalPeople) {
+            names.add(personField.getText());
+        }
+
         String amountText = expenseAmount.getText();
 
         try {
             double totalAmount = Double.parseDouble(amountText);
+            double individualShare = totalAmount / names.size();
 
-            // Split the amount equally between the two people
-            double individualShare = totalAmount / 2;
+            StringBuilder result = new StringBuilder("Each person has to pay: INR " + individualShare + "\n");
+            for (String name : names) {
+                result.append(name).append(": INR ").append(individualShare).append("\n");
+            }
 
-            // Add entries for both individuals
-            expenseDistribution.put(name1, individualShare);
-            expenseDistribution.put(name2, individualShare);
-
-            // Show an alert with the distribution
-            showAlert("Expense Split Successful", "Each person has to pay: INR " + individualShare);
+            showAlert("Expense Split Successful", result.toString());
 
         } catch (NumberFormatException e) {
             showAlert("Error", "Please enter a valid number for the amount.");
